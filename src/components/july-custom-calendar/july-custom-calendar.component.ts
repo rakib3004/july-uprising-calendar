@@ -29,7 +29,7 @@ export class JulyCustomCalendarComponent implements OnInit {
   private modalTimeout: any; // To manage the hide delay
 
   ngOnInit(): void {
-    for (let i = 1901; i <= 2100; i++) {
+    for (let i = 1800; i <= 2200; i++) {
       this.years.push(i);
     }
     this.selectedYear = this.displayDate.getFullYear();
