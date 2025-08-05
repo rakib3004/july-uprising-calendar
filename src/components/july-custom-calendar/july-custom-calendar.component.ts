@@ -10,13 +10,12 @@ import { CommonModule } from '@angular/common';
 })
 export class JulyCustomCalendarComponent implements OnInit {
   
-  currentDate: Date = new Date();
   displayDate: Date = new Date(); // The month being displayed
-  
   days: (number | null)[] = [];
-  
   banglaDigits: string[] = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-  
+  banglaMonths: string[] = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+  customJulyStartDate: Date = new Date(2024, 6, 1); // July 1, 2024
+
   ngOnInit(): void {
     this.generateCalendar();
   }
@@ -25,44 +24,53 @@ export class JulyCustomCalendarComponent implements OnInit {
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
 
+    if (year < 1901 || year > 2100) {
+      return;
+    }
+
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
-
     const startingDay = firstDayOfMonth.getDay();
     const totalDays = lastDayOfMonth.getDate();
 
     this.days = [];
 
-    // Add empty cells for days before the 1st of the month
     for (let i = 0; i < startingDay; i++) {
       this.days.push(null);
     }
 
-    // Add the days of the month
     for (let i = 1; i <= totalDays; i++) {
       this.days.push(i);
     }
   }
 
-  // Returns the custom July day for a given regular date
   getCustomJulyDay(day: number | null): number | null {
     if (day === null) {
       return null;
     }
+
     const year = this.displayDate.getFullYear();
     const month = this.displayDate.getMonth();
-    const date = new Date(year, month, day);
-    
-    // Calculate the day of the year
-    const startOfYear = new Date(year, 0, 0);
-    const diff = date.getTime() - startOfYear.getTime();
-    const oneDay = 1000 * 60 * 60 * 24;
-    const dayOfYear = Math.floor(diff / oneDay);
-    
-    return dayOfYear;
+    const currentDate = new Date(year, month, day);
+
+    if (currentDate < this.customJulyStartDate) {
+      return day; // Return the regular day
+    }
+
+    const diff = Math.floor((currentDate.getTime() - this.customJulyStartDate.getTime()) / (1000 * 3600 * 24));
+    return diff + 1;
   }
 
-  // Converts a number to Bangla numerals
+  isCustomJulyDate(day: number | null): boolean {
+    if (day === null) {
+      return false;
+    }
+    const year = this.displayDate.getFullYear();
+    const month = this.displayDate.getMonth();
+    const currentDate = new Date(year, month, day);
+    return currentDate >= this.customJulyStartDate;
+  }
+
   toBanglaNumber(num: number | null): string {
     if (num === null) {
       return '';
@@ -70,29 +78,33 @@ export class JulyCustomCalendarComponent implements OnInit {
     return num.toString().split('').map(d => this.banglaDigits[+d] || d).join('');
   }
 
-  // Returns the month name in English
   get monthName(): string {
-    return this.displayDate.toLocaleString('default', { month: 'long' });
+    const monthIndex = this.displayDate.getMonth();
+    return this.banglaMonths[monthIndex];
   }
 
-  // Returns the year
   get year(): number {
     return this.displayDate.getFullYear();
   }
 
-  // Navigate to the previous month
   prevMonth(): void {
+    const currentYear = this.displayDate.getFullYear();
+    if (currentYear <= 1901 && this.displayDate.getMonth() === 0) {
+      return;
+    }
     this.displayDate.setMonth(this.displayDate.getMonth() - 1);
     this.generateCalendar();
   }
 
-  // Navigate to the next month
   nextMonth(): void {
+    const currentYear = this.displayDate.getFullYear();
+    if (currentYear >= 2100 && this.displayDate.getMonth() === 11) {
+      return;
+    }
     this.displayDate.setMonth(this.displayDate.getMonth() + 1);
     this.generateCalendar();
   }
 
-  // Returns true if the given day is today
   isToday(day: number | null): boolean {
     if (day === null) {
       return false;

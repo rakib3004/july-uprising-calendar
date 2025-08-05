@@ -31,8 +31,11 @@
          [class.bg-blue-100]="isToday(day)"
          [class.text-gray-400]="day === null">
       
-      <span *ngIf="day !== null" class="text-lg font-semibold">
+      <span *ngIf="day !== null && getCustomJulyDay(day) !== null" class="text-lg font-semibold">
         জুলাই {{ toBanglaNumber(getCustomJulyDay(day)) }}
+      </span>
+      <span *ngIf="day !== null && getCustomJulyDay(day) === null" class="text-lg font-semibold text-gray-400">
+        -
       </span>
       
     </div>
