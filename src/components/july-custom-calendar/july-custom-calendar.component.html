@@ -34,7 +34,7 @@
     <div *ngFor="let day of days" 
          (mouseenter)="showModal($event, day)"
          (mouseleave)="hideModal()"
-         class="p-1 md:p-2 h-20 md:h-28 border rounded-lg flex flex-col justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+         class="p-1 md:p-2 h-15 md:h-28 lg:h-32 border rounded-lg flex flex-col justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
          [class.bg-gradient-to-br]="isToday(day)"
          [class.from-blue-400]="isToday(day)"
          [class.to-blue-500]="isToday(day)"
@@ -42,11 +42,11 @@
          [class.text-gray-400]="day === null">
       
       <ng-container *ngIf="day !== null">
-        <span *ngIf="isCustomJulyDate(day)" class="text-base md:text-xl font-bold">
-          {{ toBanglaNumber(getCustomJulyDay(day)) }} <span class="text-xs md:text-sm">জুলাই</span>
+        <span *ngIf="isCustomJulyDate(day)" class="text-xxs md:text-xl lg:text-xl font-normal md:font-semibold lg:font-bold">
+          {{ toBanglaNumber(getCustomJulyDay(day)) }} <span class="text-xxs md:text-sm lg:text-xs">জুলাই</span>
         </span>
-        <span *ngIf="!isCustomJulyDate(day)" class="text-base md:text-xl font-semibold">
-          {{ toBanglaNumber(day) }} <span class="text-xs md:text-sm">{{ monthName }}</span>
+        <span *ngIf="!isCustomJulyDate(day)" class="text-xxs md:text-xl lg:text-xl font-normal md:font-semibold lg:font-bold">
+          {{ toBanglaNumber(day) }} <span class="text-xxs md:text-sm lg:text-xs">{{ monthName }}</span>
         </span>
       </ng-container>
       
