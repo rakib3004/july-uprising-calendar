@@ -42,11 +42,11 @@
          [class.text-gray-400]="day === null">
       
       <ng-container *ngIf="day !== null">
-        <span *ngIf="isCustomJulyDate(day)" class="text-base md:text-sm lg:text-xxs font-normal md:font-semibold lg:font-bold">
-          {{ toBanglaNumber(getCustomJulyDay(day)) }} <span class="text-base md:text-sm lg:text-xxs">জুলাই</span>
+        <span *ngIf="isCustomJulyDate(day)" class="text-sm md:text-sm sm:text-md font-normal md:font-semibold lg:font-bold">
+          {{ toBanglaNumber(getCustomJulyDay(day)) }} <span class="text-sm md:text-sm sm:text-md">জুলাই</span>
         </span>
-        <span *ngIf="!isCustomJulyDate(day)" class="text-base md:text-xl lg:text-xxs font-normal md:font-semibold lg:font-bold">
-          {{ toBanglaNumber(day) }} <span class="text-base md:text-sm lg:text-xxs">{{ monthName }}</span>
+        <span *ngIf="!isCustomJulyDate(day)" class="text-sm md:text-xl lg:text-md font-normal md:font-semibold lg:font-bold">
+          {{ toBanglaNumber(day) }} <span class="text-sm md:text-sm sm:text-md">{{ monthName }}</span>
         </span>
       </ng-container>
       
