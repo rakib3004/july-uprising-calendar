@@ -69,9 +69,18 @@ export class JulyCustomCalendarComponent implements OnInit {
     return currentDate >= this.customJulyStartDate;
   }
 
+  getActualDate(day: number | null): string {
+    if (day === null) return '';
+    const date = new Date(this.displayDate.getFullYear(), this.displayDate.getMonth(), day);
+    const monthName = this.banglaMonths[date.getMonth()];
+    const dayInBangla = this.toBanglaNumber(date.getDate());
+    const yearInBangla = this.toBanglaNumber(date.getFullYear());
+    return `${monthName} ${dayInBangla}, ${yearInBangla}`;
+  }
+
   toBanglaNumber(num: number | null): string {
     if (num === null) return '';
-    return num.toString().split('').map(d => this.banglaDigits[+d] || d).join('');
+    return num.toString().split('').map(d => this.banglaDigits[parseInt(d)] || d).join('');
   }
 
   get monthName(): string {
