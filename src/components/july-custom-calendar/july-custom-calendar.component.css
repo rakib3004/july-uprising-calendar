@@ -1,0 +1,19 @@
+/* Custom styles for the calendar */
+
+/* Style for the dropdowns */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none; /* Remove default arrow in some browsers */
+}
+
+/* Hover effect for calendar days */
+.transition-all:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Today's date highlight */
+.bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
