@@ -26,6 +26,7 @@ export class JulyCustomCalendarComponent implements OnInit {
   modalContent: string = '';
   modalX: number = 0;
   modalY: number = 0;
+  private modalTimeout: any; // To manage the hide delay
 
   ngOnInit(): void {
     for (let i = 1901; i <= 2100; i++) {
@@ -107,22 +108,29 @@ export class JulyCustomCalendarComponent implements OnInit {
 
   showModal(event: MouseEvent, day: number | null): void {
     if (day === null) return;
+    clearTimeout(this.modalTimeout);
     const target = event.currentTarget as HTMLElement;
     const rect = target.getBoundingClientRect();
     this.modalContent = this.getActualDate(day);
-    this.modalX = rect.left + window.scrollX + rect.width / 2;
-    this.modalY = rect.top + window.scrollY - 40;
+    // Position the modal directly above the hovered date cell
+    this.modalX = rect.left + window.scrollX + rect.width / 2; // Center horizontally
+    this.modalY = rect.top + window.scrollY - 10; // Position above the element, with some offset
     this.modalVisible = true;
   }
 
   hideModal(): void {
-    this.modalVisible = false;
+    this.modalTimeout = setTimeout(() => {
+      this.modalVisible = false;
+    }, 200); // Delay hiding for smoother transition
   }
 
   onOverlayClick(event: MouseEvent): void {
-    if ((event.target as HTMLElement).classList.contains('fixed')) {
+    if ((event.target as HTMLElement).classList.contains('absolute')) {
       this.hideModal();
     }
   }
 
+  clearTimeout(): void {
+    clearTimeout(this.modalTimeout);
+  }
 }

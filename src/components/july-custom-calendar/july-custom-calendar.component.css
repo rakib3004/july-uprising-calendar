@@ -23,11 +23,8 @@ select {
   position: absolute;
 }
 
-.inset-0 {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.z-50 {
+  z-index: 50;
 }
 
 .bg-black {
@@ -38,16 +35,24 @@ select {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.z-50 {
-  z-index: 50;
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .bg-white {
   background-color: #fff;
 }
 
-.p-8 {
-  padding: 2rem;
+.p-4 {
+  padding: 1rem;
 }
 
 .rounded-lg {
@@ -102,4 +107,53 @@ select {
 
 .scale-100 {
   transform: scale(1);
+}
+
+/* Arrow for Modal */
+.bottom-\[-8px\] {
+  bottom: -8px;
+}
+
+.left-1\/2 {
+  left: 50%;
+}
+
+.transform {
+  transform: var(--tw-transform);
+}
+
+.-translate-x-1\/2 {
+  --tw-translate-x: -50%;
+}
+
+.w-0 {
+  width: 0;
+}
+
+.h-0 {
+  height: 0;
+}
+
+.border-l-8 {
+  border-left-width: 8px;
+}
+
+.border-l-transparent {
+  border-left-color: transparent;
+}
+
+.border-r-8 {
+  border-right-width: 8px;
+}
+
+.border-r-transparent {
+  border-right-color: transparent;
+}
+
+.border-t-8 {
+  border-top-width: 8px;
+}
+
+.border-t-white {
+  border-top-color: #fff;
 }
