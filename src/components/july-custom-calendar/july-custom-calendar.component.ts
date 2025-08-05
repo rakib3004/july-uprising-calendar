@@ -21,6 +21,12 @@ export class JulyCustomCalendarComponent implements OnInit {
   selectedYear!: number;
   selectedMonth!: number;
 
+  // Tooltip properties
+  tooltipVisible: boolean = false;
+  tooltipX: number = 0;
+  tooltipY: number = 0;
+  tooltipContent: string = '';
+
   ngOnInit(): void {
     for (let i = 1901; i <= 2100; i++) {
       this.years.push(i);
@@ -97,6 +103,18 @@ export class JulyCustomCalendarComponent implements OnInit {
     return this.displayDate.getFullYear() === today.getFullYear() &&
            this.displayDate.getMonth() === today.getMonth() &&
            day === today.getDate();
+  }
+
+  showTooltip(event: MouseEvent, day: number | null): void {
+    if (day === null) return;
+    this.tooltipContent = this.getActualDate(day);
+    this.tooltipX = event.clientX + 10; // Offset to the right
+    this.tooltipY = event.clientY + 10; // Offset downwards
+    this.tooltipVisible = true;
+  }
+
+  hideTooltip(): void {
+    this.tooltipVisible = false;
   }
 }
 
