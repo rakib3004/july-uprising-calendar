@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
+import { JulyCustomCalendarComponent } from '../july-custom-calendar/july-custom-calendar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [JulyCustomCalendarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  title = 'BloodyJuly';
+  title = 'জুলাই গণঅভ্যুত্থান ক্যালেন্ডার';
   today: Date;
   customDate: string;
 
