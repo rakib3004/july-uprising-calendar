@@ -1,50 +1,107 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-july-custom-calendar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './july-custom-calendar.component.html',
   styleUrl: './july-custom-calendar.component.css'
 })
-export class JulyCustomCalendarComponent {
-  today: Date = new Date();
-  startOfCustomJuly: Date = new Date(2024, 6, 0); // July 1, 2024 (month is 0-indexed)
-  banglaMonths: string[] = ['জুলাই'];
-  banglaDigits: string[] = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
-
-  // Returns the custom July day number for a given date
-  getCustomJulyDay(date: Date): number {
-    const start = new Date(this.startOfCustomJuly.getFullYear(), this.startOfCustomJuly.getMonth(), 1);
-    const diff = Math.floor((date.getTime() - start.getTime()) / (1000 * 3600 * 24));
-    return diff + 1;
+export class JulyCustomCalendarComponent implements OnInit {
+  
+  currentDate: Date = new Date();
+  displayDate: Date = new Date(); // The month being displayed
+  
+  days: (number | null)[] = [];
+  
+  banglaDigits: string[] = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  
+  ngOnInit(): void {
+    this.generateCalendar();
   }
 
-  // Returns the custom July year (always 2024+)
-  getCustomJulyYear(date: Date): number {
-    return date.getFullYear();
+  generateCalendar(): void {
+    const year = this.displayDate.getFullYear();
+    const month = this.displayDate.getMonth();
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+
+    const startingDay = firstDayOfMonth.getDay();
+    const totalDays = lastDayOfMonth.getDate();
+
+    this.days = [];
+
+    // Add empty cells for days before the 1st of the month
+    for (let i = 0; i < startingDay; i++) {
+      this.days.push(null);
+    }
+
+    // Add the days of the month
+    for (let i = 1; i <= totalDays; i++) {
+      this.days.push(i);
+    }
+  }
+
+  // Returns the custom July day for a given regular date
+  getCustomJulyDay(day: number | null): number | null {
+    if (day === null) {
+      return null;
+    }
+    const year = this.displayDate.getFullYear();
+    const month = this.displayDate.getMonth();
+    const date = new Date(year, month, day);
+    
+    // Calculate the day of the year
+    const startOfYear = new Date(year, 0, 0);
+    const diff = date.getTime() - startOfYear.getTime();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    
+    return dayOfYear;
   }
 
   // Converts a number to Bangla numerals
-  toBanglaNumber(num: number): string {
+  toBanglaNumber(num: number | null): string {
+    if (num === null) {
+      return '';
+    }
     return num.toString().split('').map(d => this.banglaDigits[+d] || d).join('');
   }
 
-  // Returns today's custom July date in Bangla
-  get todayCustomJulyBangla(): string {
-    const day = this.getCustomJulyDay(this.today);
-    const year = 2024;
-    return `জুলাই ${this.toBanglaNumber(day)}, ${this.toBanglaNumber(year)}`;
+  // Returns the month name in English
+  get monthName(): string {
+    return this.displayDate.toLocaleString('default', { month: 'long' });
   }
 
-  // Generate a grid of July days (e.g., 1-401 for a year)
-  get julyDays(): number[] {
-    // For demonstration, let's show 1-401 days
-    return Array.from({length: 401}, (_, i) => i + 1);
+  // Returns the year
+  get year(): number {
+    return this.displayDate.getFullYear();
+  }
+
+  // Navigate to the previous month
+  prevMonth(): void {
+    this.displayDate.setMonth(this.displayDate.getMonth() - 1);
+    this.generateCalendar();
+  }
+
+  // Navigate to the next month
+  nextMonth(): void {
+    this.displayDate.setMonth(this.displayDate.getMonth() + 1);
+    this.generateCalendar();
   }
 
   // Returns true if the given day is today
-  isToday(day: number): boolean {
-    return this.getCustomJulyDay(this.today) === day;
+  isToday(day: number | null): boolean {
+    if (day === null) {
+      return false;
+    }
+    const today = new Date();
+    return (
+      this.displayDate.getFullYear() === today.getFullYear() &&
+      this.displayDate.getMonth() === today.getMonth() &&
+      day === today.getDate()
+    );
   }
 }
