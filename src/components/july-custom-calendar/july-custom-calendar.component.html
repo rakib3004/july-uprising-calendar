@@ -3,13 +3,13 @@
   <!-- Header: Month and Year -->
   <div class="flex justify-between items-center mb-4">
     <button (click)="prevMonth()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-      &lt; Prev
+      &lt; পূর্ববর্তী
     </button>
     <h2 class="text-2xl font-bold text-gray-800">
-      {{ monthName }} {{ year }}
+      {{ monthName }} {{ toBanglaNumber(year) }}
     </h2>
     <button (click)="nextMonth()" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-      Next &gt;
+      পরবর্তী &gt;
     </button>
   </div>
 
@@ -17,13 +17,13 @@
   <div class="grid grid-cols-7 gap-2 text-center">
     
     <!-- Day Headers -->
-    <div class="font-bold text-gray-600">Sun</div>
-    <div class="font-bold text-gray-600">Mon</div>
-    <div class="font-bold text-gray-600">Tue</div>
-    <div class="font-bold text-gray-600">Wed</div>
-    <div class="font-bold text-gray-600">Thu</div>
-    <div class="font-bold text-gray-600">Fri</div>
-    <div class="font-bold text-gray-600">Sat</div>
+    <div class="font-bold text-gray-600">রবি</div>
+    <div class="font-bold text-gray-600">সোম</div>
+    <div class="font-bold text-gray-600">মঙ্গল</div>
+    <div class="font-bold text-gray-600">বুধ</div>
+    <div class="font-bold text-gray-600">বৃহঃ</div>
+    <div class="font-bold text-gray-600">শুক্র</div>
+    <div class="font-bold text-gray-600">শনি</div>
 
     <!-- Calendar Days -->
     <div *ngFor="let day of days" 
@@ -31,12 +31,14 @@
          [class.bg-blue-100]="isToday(day)"
          [class.text-gray-400]="day === null">
       
-      <span *ngIf="day !== null && getCustomJulyDay(day) !== null" class="text-lg font-semibold">
-        জুলাই {{ toBanglaNumber(getCustomJulyDay(day)) }}
-      </span>
-      <span *ngIf="day !== null && getCustomJulyDay(day) === null" class="text-lg font-semibold text-gray-400">
-        -
-      </span>
+      <ng-container *ngIf="day !== null">
+        <span *ngIf="isCustomJulyDate(day)" class="text-lg font-semibold">
+          {{ toBanglaNumber(getCustomJulyDay(day)) }} জুলাই
+        </span>
+        <span *ngIf="!isCustomJulyDate(day)" class="text-lg font-semibold">
+          {{ toBanglaNumber(day) }} {{ monthName }}
+        </span>
+      </ng-container>
       
     </div>
     
