@@ -34,7 +34,7 @@
     <div *ngFor="let day of days" 
          (mouseenter)="showModal($event, day)"
          (mouseleave)="hideModal()"
-         class="p-1 md:p-2 h-12 md:h-28 lg:h-24 border rounded-lg flex flex-col justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+         class="p-1 md:p-2 h-16 md:h-28 lg:h-32 border rounded-lg flex flex-col justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-blue-100"
          [class.bg-gradient-to-br]="isToday(day)"
          [class.from-blue-400]="isToday(day)"
          [class.to-blue-500]="isToday(day)"
@@ -63,11 +63,11 @@
      [style.top.px]="modalY"
      class="fixed z-50 transition-opacity duration-300 ease-in-out opacity-0 transform -translate-x-1/2"
      [class.opacity-100]="modalVisible">
-  <div class="relative bg-white p-3 md:p-4 rounded-lg shadow-xl text-center border border-gray-200 transition-transform duration-300 ease-in-out transform scale-95"
+  <div class="relative bg-blue-50 p-3 md:p-4 rounded-lg shadow-xl text-center border border-gray-200 transition-transform duration-300 ease-in-out transform scale-95"
        [class.scale-100]="modalVisible">
     <h2 class="text-lg md:text-xl sm:text-sm font-bold">
       <span class="blue-gradient-text">{{ modalContent }}</span>
     </h2>
-    <div class="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white"></div>
+    <div class="absolute left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-blue-50"></div>
   </div>
 </div>

@@ -115,7 +115,7 @@ export class JulyCustomCalendarComponent implements OnInit {
     
     // Corrected modal positioning
     this.modalX = rect.left;
-    this.modalY = rect.top - 20; // Position above the element with some offset
+    this.modalY = rect.top - 40; // Position above the element with some offset
 
     this.modalVisible = true;
   }
