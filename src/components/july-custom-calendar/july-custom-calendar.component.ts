@@ -112,9 +112,11 @@ export class JulyCustomCalendarComponent implements OnInit {
     const target = event.currentTarget as HTMLElement;
     const rect = target.getBoundingClientRect();
     this.modalContent = this.getActualDate(day);
-    // Position the modal directly above the hovered date cell
-    this.modalX = rect.left + window.scrollX + rect.width / 2; // Center horizontally
-    this.modalY = rect.top + window.scrollY - 10; // Position above the element, with some offset
+    
+    // Corrected modal positioning
+    this.modalX = rect.left;
+    this.modalY = rect.top - 20; // Position above the element with some offset
+
     this.modalVisible = true;
   }
 
@@ -125,7 +127,9 @@ export class JulyCustomCalendarComponent implements OnInit {
   }
 
   onOverlayClick(event: MouseEvent): void {
-    if ((event.target as HTMLElement).classList.contains('absolute')) {
+    // This function is not directly used in your provided HTML, but it's good practice.
+    // To make it work, you'd need a full-screen overlay element.
+    if ((event.target as HTMLElement).classList.contains('modal-overlay')) {
       this.hideModal();
     }
   }
