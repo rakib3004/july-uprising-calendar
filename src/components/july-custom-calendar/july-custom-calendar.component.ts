@@ -21,11 +21,11 @@ export class JulyCustomCalendarComponent implements OnInit {
   selectedYear!: number;
   selectedMonth!: number;
 
-  // Tooltip properties
-  tooltipVisible: boolean = false;
-  tooltipX: number = 0;
-  tooltipY: number = 0;
-  tooltipContent: string = '';
+  // Modal properties
+  modalVisible: boolean = false;
+  modalContent: string = '';
+  modalX: number = 0;
+  modalY: number = 0;
 
   ngOnInit(): void {
     for (let i = 1901; i <= 2100; i++) {
@@ -105,17 +105,24 @@ export class JulyCustomCalendarComponent implements OnInit {
            day === today.getDate();
   }
 
-  showTooltip(event: MouseEvent, day: number | null): void {
+  showModal(event: MouseEvent, day: number | null): void {
     if (day === null) return;
-    this.tooltipContent = this.getActualDate(day);
-    this.tooltipX = event.clientX + 10; // Offset to the right
-    this.tooltipY = event.clientY + 10; // Offset downwards
-    this.tooltipVisible = true;
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.modalContent = this.getActualDate(day);
+    this.modalX = rect.left + window.scrollX + rect.width / 2;
+    this.modalY = rect.top + window.scrollY - 40;
+    this.modalVisible = true;
   }
 
-  hideTooltip(): void {
-    this.tooltipVisible = false;
+  hideModal(): void {
+    this.modalVisible = false;
   }
+
+  onOverlayClick(event: MouseEvent): void {
+    if ((event.target as HTMLElement).classList.contains('fixed')) {
+      this.hideModal();
+    }
+  }
+
 }
-
-
